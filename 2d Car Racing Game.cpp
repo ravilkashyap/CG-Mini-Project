@@ -1,8 +1,9 @@
-#include<GLUT/glut.h>
-#include<iostream>//for strlen
-#include<stdlib.h>
-#include<string>
+#include <GLUT/glut.h>
+#include <iostream>//for strlen
+#include <stdlib.h>
+#include <string>
 #include <sstream>
+#include <cstdio>
 
 
 int i,q;
@@ -283,12 +284,12 @@ void display()
 
     score = score + 1;
     glColor3f(1,1,1);
-    drawText("Score:", 360,455);
+    drawText("Meters:", 360,455);
     //itoa (score, buffer, 10);
-
-    std::ostringstream number_str;
-
-    number_str << score;
+    sprintf( buffer, "%d", score/20 );
+    //    std::ostringstream number_str;
+    //
+    //    number_str << score;
     //std::cout << "number = '" << number_str.str() << "'" << std::endl;
 
     drawTextNum(buffer, 6, 420,455);
