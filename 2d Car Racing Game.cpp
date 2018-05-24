@@ -284,7 +284,7 @@ void display()
 
     score = score + 1;
     glColor3f(1,1,1);
-    drawText("Meters:", 360,455);
+    drawText("Score:", 360,455);
     //itoa (score, buffer, 10);
     sprintf( buffer, "%d", score/20 );
     //    std::ostringstream number_str;
@@ -306,6 +306,14 @@ void display()
     //}
 }
 
+int multi_player(int option)
+{
+    if(option==1)
+        return 1;
+    else
+        return 0;
+}
+
 
 int main(int argc, char **argv)
 {
@@ -316,6 +324,8 @@ int main(int argc, char **argv)
     glutCreateWindow("2D Car Racing game");
     ovpos();
     init();
+    glutCreateMenu(multi_player);
+    glut
     glutDisplayFunc(display);
     glutSpecialFunc(Specialkey);
     glutKeyboardFunc(Normalkey);
