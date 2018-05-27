@@ -54,7 +54,7 @@ void drawTextNum(char ch[],int numtext,int xpos, int ypos)//counting the score
 
 void ovpos()
 {
-    glClearColor(0,0,1,0);
+    glClearColor(0,0,0.5,0);
     for(i = 0; i < 4; i++)
     {
         if(rand() % 2 == 0)
@@ -63,7 +63,7 @@ void ovpos()
         }
         else
         {
-            ovehicleX[i] = 300;
+            ovehicleX[i] = 280;
         }
         ovehicleY[i] = 1000 - i * 160;
     }
@@ -74,77 +74,21 @@ void drawRoad()
 {
     glBegin(GL_QUADS);
     glColor3f(1,1,1);
-    //    glVertex2f(250 - 100, 500);
-    //    glVertex2f(250 - 100, 0);
-    //    glVertex2f(250 + 100, 0);
-    //    glVertex2f(250 + 100, 500);
-
     glVertex2f(250 - 100, 500);
     glVertex2f(250 - 100, 0);
-    glVertex2f(250 + 100, 0);
-    glVertex2f(250 + 100, 500);
+    glVertex2f(250 + 30, 0);
+    glVertex2f(250 + 30, 500);
 
     glEnd();
 }
 
 
-void drawDivider()//black patch drawn in middle of road
-{
-    glLoadIdentity();
-    glTranslatef(0, movd, 0);
-    for(i = 1; i <= 10; i++)
-    {
-        glColor3f(1, 1, 1);
-        glBegin(GL_QUADS);
-        glVertex2f(divx  - 5, divy * 15 * i + 18);
-        glVertex2f(divx  - 5, divy * 15 * i - 18);
-        glVertex2f(divx  + 5, divy * 15 * i - 18);
-        glVertex2f(divx  + 5, divy * 15 * i + 18);
-        glEnd();
-    }
-    glLoadIdentity();
-}
 
 
-//void drawVehicle()//car for racing
-//{
-//    glPointSize(10.0);
-//    glBegin(GL_POINTS);//tire
-//    glColor3f(0,0,0);
-//    glVertex2f(vehicleX - 25, vehicleY + 16);
-//    glVertex2f(vehicleX + 25, vehicleY + 16);
-//    glVertex2f(vehicleX - 25, vehicleY - 16);
-//    glVertex2f(vehicleX + 25, vehicleY - 16);
-//    glEnd();
-//
-//    glBegin(GL_QUADS);
-//    glColor3f(1,0,0);//middle body
-//    glVertex2f(vehicleX - 25, vehicleY + 20);
-//    glVertex2f(vehicleX - 25, vehicleY - 20);
-//    glVertex2f(vehicleX + 25, vehicleY - 20);
-//    glVertex2f(vehicleX + 25, vehicleY + 20);
-//    glEnd();
-//
-//    glBegin(GL_QUADS);//up body
-//    glColor3f(0,0,1);
-//    glVertex2f(vehicleX - 23, vehicleY + 20);
-//    glVertex2f(vehicleX - 19, vehicleY + 40);
-//    glVertex2f(vehicleX + 19, vehicleY + 40);
-//    glVertex2f(vehicleX + 23, vehicleY + 20);
-//    glEnd();
-//
-//    glBegin(GL_QUADS);//down body
-//    glColor3f(0,0,1);
-//    glVertex2f(vehicleX - 23, vehicleY - 20);
-//    glVertex2f(vehicleX - 19, vehicleY - 35);
-//    glVertex2f(vehicleX + 19, vehicleY - 35);
-//    glVertex2f(vehicleX + 23, vehicleY - 20);
-//    glEnd();
-//}
 
 void drawVehicle()//car for racing
 {
-    glPointSize(80.0);
+    glPointSize(20.0);
     glBegin(GL_POINTS);//tire
     glColor3f(1,0.5,0);
     glVertex2f(vehicleX, vehicleY);
@@ -153,91 +97,8 @@ void drawVehicle()//car for racing
     glVertex2f(vehicleX, vehicleY);
     glEnd();
 
-    //    glBegin(GL_POINTS);
-    //    glColor3f(1,0,0);//middle body
-    //    glVertex2f(vehicleX, vehicleY);
-    //    glVertex2f(vehicleX, vehicleY);
-    //    glVertex2f(vehicleX, vehicleY);
-    //    glVertex2f(vehicleX, vehicleY);
-    //    glEnd();
-    //
-    //    glBegin(GL_POINTS);//up body
-    //    glColor3f(0,0,1);
-    //    glVertex2f(vehicleX, vehicleY);
-    //    glVertex2f(vehicleX, vehicleY);
-    //    glVertex2f(vehicleX, vehicleY);
-    //    glVertex2f(vehicleX, vehicleY);
-    //    glEnd();
-    //
-    //    glBegin(GL_POINTS);//down body
-    //    glColor3f(0,0,1);
-    //    glVertex2f(vehicleX, vehicleY);
-    //    glVertex2f(vehicleX, vehicleY);
-    //    glVertex2f(vehicleX, vehicleY);
-    //    glVertex2f(vehicleX, vehicleY);
-    //    glEnd();
 }
 
-
-//void drawOVehicle()//other cars
-//{
-//
-//    for(i = 0; i < 4; i++)
-//    {
-//        glPointSize(10.0);
-//        glBegin(GL_POINTS);//tire
-//        glColor3f(0,0,0);
-//        glVertex2f(ovehicleX[i] - 25, ovehicleY[i] + 16);
-//        glVertex2f(ovehicleX[i] + 25, ovehicleY[i] + 16);
-//        glVertex2f(ovehicleX[i] - 25, ovehicleY[i] - 16);
-//        glVertex2f(ovehicleX[i] + 25, ovehicleY[i] - 16);
-//        glEnd();
-//
-//        glBegin(GL_QUADS);
-//        glColor3f(0.99609, 0.83984, 0);//middle body
-//        glVertex2f(ovehicleX[i] - 25, ovehicleY[i] + 20);
-//        glVertex2f(ovehicleX[i] - 25, ovehicleY[i] - 20);
-//        glVertex2f(ovehicleX[i] + 25, ovehicleY[i] - 20);
-//        glVertex2f(ovehicleX[i] + 25, ovehicleY[i] + 20);
-//        glEnd();
-//
-//        glBegin(GL_QUADS);//up body
-//        glColor3f(0,1,0);
-//        glVertex2f(ovehicleX[i] - 23, ovehicleY[i] + 20);
-//        glVertex2f(ovehicleX[i] - 19, ovehicleY[i] + 40);
-//        glVertex2f(ovehicleX[i] + 19, ovehicleY[i] + 40);
-//        glVertex2f(ovehicleX[i] + 23, ovehicleY[i] + 20);
-//        glEnd();
-//
-//        glBegin(GL_QUADS);//down body
-//        glColor3f(0,1,0);
-//        glVertex2f(ovehicleX[i] - 23, ovehicleY[i] - 20);
-//        glVertex2f(ovehicleX[i] - 19, ovehicleY[i] - 35);
-//        glVertex2f(ovehicleX[i] + 19, ovehicleY[i] - 35);
-//        glVertex2f(ovehicleX[i] + 23, ovehicleY[i] - 20);
-//        glEnd();
-//
-//        ovehicleY[i] = ovehicleY[i] - 8;
-//
-//        if(ovehicleY[i] > vehicleY - 25 - 25 && ovehicleY[i] < vehicleY + 25 + 25 && ovehicleX[i] == vehicleX)
-//        {
-//            collide = true;
-//        }
-//
-//        if(ovehicleY[i] < -25)
-//        {
-//            if(rand() % 2 == 0)
-//            {
-//                ovehicleX[i] = 200;
-//            }
-//            else
-//            {
-//                ovehicleX[i] = 300;
-//            }
-//            ovehicleY[i] = 600;
-//        }
-//    }
-//}
 
 void drawOVehicle()//other cars
 {
@@ -252,31 +113,6 @@ void drawOVehicle()//other cars
         glVertex2f(ovehicleX[i]-25, ovehicleY[i]);
         glVertex2f(ovehicleX[i]-25, ovehicleY[i]);
         glEnd();
-
-        //        glBegin(GL_QUADS);
-        //        glColor3f(0.99609, 0.83984, 0);//middle body
-        //        glVertex2f(ovehicleX[i] - 25, ovehicleY[i] + 20);
-        //        glVertex2f(ovehicleX[i] - 25, ovehicleY[i] - 20);
-        //        glVertex2f(ovehicleX[i] + 25, ovehicleY[i] - 20);
-        //        glVertex2f(ovehicleX[i] + 25, ovehicleY[i] + 20);
-        //        glEnd();
-        //
-        //        glBegin(GL_QUADS);//up body
-        //        glColor3f(0,1,0);
-        //        glVertex2f(ovehicleX[i] - 23, ovehicleY[i] + 20);
-        //        glVertex2f(ovehicleX[i] - 19, ovehicleY[i] + 40);
-        //        glVertex2f(ovehicleX[i] + 19, ovehicleY[i] + 40);
-        //        glVertex2f(ovehicleX[i] + 23, ovehicleY[i] + 20);
-        //        glEnd();
-        //
-        //        glBegin(GL_QUADS);//down body
-        //        glColor3f(0,1,0);
-        //        glVertex2f(ovehicleX[i] - 23, ovehicleY[i] - 20);
-        //        glVertex2f(ovehicleX[i] - 19, ovehicleY[i] - 35);
-        //        glVertex2f(ovehicleX[i] + 19, ovehicleY[i] - 35);
-        //        glVertex2f(ovehicleX[i] + 23, ovehicleY[i] - 20);
-        //        glEnd();
-
         ovehicleY[i] = ovehicleY[i] - 8;
 
         if(ovehicleY[i] > vehicleY - 25 - 25 && ovehicleY[i] < vehicleY + 25 + 25 && ovehicleX[i] == vehicleX)
@@ -292,7 +128,7 @@ void drawOVehicle()//other cars
             }
             else
             {
-                ovehicleX[i] = 300;
+                ovehicleX[i] = 280;
             }
             ovehicleY[i] = 600;
         }
@@ -319,7 +155,7 @@ void Specialkey(int key, int x, int y)//allow to use navigation key for movement
             break;
         case GLUT_KEY_LEFT:vehicleX = 200;
             break;
-        case GLUT_KEY_RIGHT:vehicleX = 300;
+        case GLUT_KEY_RIGHT:vehicleX = 280;
             break;
 
     }
@@ -376,7 +212,6 @@ void display()
     {
         glClear(GL_COLOR_BUFFER_BIT);
         drawRoad();
-        drawDivider();
         drawVehicle();
         drawOVehicle();
         movd = movd - 16;
@@ -388,13 +223,7 @@ void display()
         score = score + 1;
         glColor3f(1,1,1);
         drawText("Meters:", 360,455);
-        //itoa (score, buffer, 10);
         sprintf( buffer, "%d", score/20 );
-        //    std::ostringstream number_str;
-        //
-        //    number_str << score;
-        //std::cout << "number = '" << number_str.str() << "'" << std::endl;
-
         drawTextNum(buffer, 6, 420,455);
         glutSwapBuffers();
         for(q = 0; q<= 10000000; q++){;}
@@ -404,17 +233,8 @@ void display()
             drawText("Game Over", 200,250);
             glutSwapBuffers();
             getchar();
-            //exit(0);
         }
     }
-}
-
-int multi_player(int option)
-{
-    if(option==1)
-        return 1;
-    else
-        return 0;
 }
 
 
@@ -427,7 +247,6 @@ int main(int argc, char **argv)
     glutCreateWindow("2D Car Racing game");
     ovpos();
     init();
-    //PlaySound("starwars.wav", NULL, SND_FILENAME|SND_LOOP);
     glutDisplayFunc(display);
     glutSpecialFunc(Specialkey);
     glutKeyboardFunc(Normalkey);
