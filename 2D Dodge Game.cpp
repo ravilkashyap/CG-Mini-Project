@@ -9,18 +9,19 @@
 #include <thread>  
 
 
-int c=010;
-int i,q,speed=0;
-int score = 0;//for score counting
+int c=010;//for moving in between lanes
+int i,q,z;
+float speed=0;
+int score = 0,score1=0;//for score counting
 int screen = 0;
 bool collide = false;//check if tile collide to make game over
 char buffer[10];
-int tileX = 247, tileY = 70;
+int tileX = 240, tileY = 70;
 int otileX[4], otileY[4];
-int divx = 0, divy = 6;
 
 
-void drawText(char ch[],int xpos, int ypos)//draw the text for score and game over
+
+void drawText(char ch[],int xpos, int ypos,int z=0)//draw the text for score and game over
 {
     int numofchar = strlen(ch);
     glLoadIdentity ();
@@ -28,7 +29,11 @@ void drawText(char ch[],int xpos, int ypos)//draw the text for score and game ov
     for (i = 0; i <= numofchar - 1; i++)
     {
 
+        if(z==1)
         glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, ch[i]);//font used here, may use other font also
+        else
+        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18,ch[i]);
+
     }
 }
 
@@ -55,9 +60,9 @@ void drawTextNum(char ch[],int numtext,int xpos, int ypos)//counting the score
 }
 
 
-void ovpos()
+void ovpos()//Spawning positions of the obstacles
 {
-    glClearColor(0.1,0.4,0.7,1);
+    
     for(i = 0; i < 4; i++)
     {
         if(rand() % 2 == 0)
@@ -70,7 +75,7 @@ void ovpos()
             }
             else
             {
-                otileX[i] = 350;
+                otileX[i] = 360;
             }
         otileY[i] = 1000 - i * 160;
     }
@@ -111,7 +116,7 @@ glBegin(GL_QUADS);
 
 
 
-void drawCircle(int tileX, int tileY, int radius)
+void drawCircle(int tileX, int tileY, int radius)// for our object UFO ;)
 {
 	float x2,y2;
 float angle;
@@ -128,7 +133,7 @@ for (angle=1.0f;angle<361.0f;angle+=1)
 glEnd();
 }
 
-void drawObject()//our target object
+void drawUFO()//our target object UFO
 {
     // glPointSize(50.0);
     // glBegin(GL_POINTS);
@@ -179,7 +184,7 @@ drawCircle(tileX-10,tileY-10,4);
 }
 
 
-void drawOTile()//other tiles
+void drawObject() //obstacles
 {
 
     for(i = 0; i < 4; i++)
@@ -196,25 +201,20 @@ void drawOTile()//other tiles
     	glColor3f(0.8,0.2,0.5);
 
         //glColor3f((rand() % 100 + 10)/100,(rand() % 100 + 10)/100,(rand() % 100 + 10)/100);
-        glVertex2f(otileX[i]-60, otileY[i]+50);
+        glVertex2f(otileX[i]-60, otileY[i]-50);
         glVertex2f(otileX[i]-60, otileY[i]);
         glVertex2f(otileX[i], otileY[i]);
-        glVertex2f(otileX[i], otileY[i]+50);
+        glVertex2f(otileX[i], otileY[i]-50);
    
-
-
-		glVertex2f(370, 500);
-		glVertex2f(370, 0);
-		glVertex2f(380, 0);
-		glVertex2f(380, 500);
 
 
         glEnd();
         otileY[i] = otileY[i] - 10*speed	;
 
-        if(otileY[i] > tileY - 25 - 25 || otileY[i] < tileY + 25 + 25 || otileX[i] > tileX)
+        if(otileY[i] > tileY - 80 && otileY[i] < tileY + 80 &&otileX[i] ==tileX+40)
         {
             collide = true;
+
             
         }
 
@@ -259,39 +259,39 @@ void Specialkey(int key, int x, int y)//allow to use navigation key for movement
         case GLUT_KEY_LEFT:
             if(c==100) 
             {   
-                tileX = 170;
+                tileX = 160;
             }
             else if(c==010) 
             {   c=100;
-                tileX = 170;
+                tileX = 160;
             }
             else if(c==001) 
             {
-                tileX = 255;
+                tileX = 240;
                 c=010;
             }
             else
-            tileX = 170;
+            tileX = 160;
 
             break;
         case GLUT_KEY_RIGHT:
 
         if(c==001) 
             {   
-                tileX = 333;
+                tileX = 320;
             }
             else if(c==010) 
             {
-                tileX = 333;
+                tileX = 320;
                 c=001;
             }
             else if(c==100) 
             {
-                tileX = 255;
+                tileX = 240;
                 c=010;
             }
             else
-            tileX = 333;
+            tileX = 320;
 
             break;
 
@@ -300,27 +300,44 @@ void Specialkey(int key, int x, int y)//allow to use navigation key for movement
     glutPostRedisplay();
 }
 
-void Normalkey(unsigned char key, int x, int y)
+void reinit() //To re-initialize the variables once the game ends
+{
+    c=010;
+    speed=0;
+    score=0;
+    collide=false;
+    tileX = 240; tileY = 70;
+    ovpos();
+    
+
+} 
+
+void Normalkey(unsigned char key, int x, int y)//keyboard input
 {
     switch(key)
     {
         case ' ':if(screen == 0)
             screen=1;
+            else if(screen==3)
+                {
+                    reinit();
+                    screen=1;
+                }
             break;
         case 'b':
         case 'B':if(screen == 1)
             screen=2;
-            speed=1;
+            speed=0.8;
             break;
         case 'i':
         case 'I':if(screen == 1)
             screen=2;
-            speed=1.5;
+            speed=1.2;
             break;
         case 'e':
         case 'E':if(screen == 1)
             screen=2;
-            speed=2;
+            speed=1.5;
             break;
         case 27:
         exit(0);
@@ -337,48 +354,95 @@ void init()
 }
 
 
+
+void restart()// to restart the game
+{
+    glClear( GL_COLOR_BUFFER_BIT);
+    glClearColor(0,0,0,0);
+    glFlush();
+    glColor3f(1,1,1);
+    drawText("GAME OVER", 190,340,1);
+    glColor3f(0,0.5,1);
+    drawText("Score :", 190,250);
+    sprintf( buffer, "%d", score );
+    drawTextNum(buffer, 6, 245,250);
+
+    
+    glColor3f(1,0.5,0);
+    drawText("Dodge :", 190,280);
+    sprintf( buffer, "%d", score/20 );
+    drawTextNum(buffer, 6, 245,280);
+
+    glColor3f(1,1,1);
+    drawText("Press                 to play again!", 180, 180);
+    glColor3f((rand() % 100 + 50)/100,(rand() % 100 + 50)/100,(rand() % 100 + 50)/100);
+    drawText("SPACE",215,180);
+    glutSwapBuffers();
+    getchar();
+
+    
+    
+}
+
 void display()
 {
     if(screen == 0)
     {
+        glClearColor(0,0,0,1);
         glClear(GL_COLOR_BUFFER_BIT);
-        glColor3f(1,1,1);
-        drawText("2D DODGE GAME", 180, 280);
+        glColor3f(1,1,0);
+        glFlush();   
+        //glColor3f((rand() % 100 + 50)/100,(rand() % 100 + 50)/100,(rand() % 100 + 50)/100);
+        drawText("2D DODGE GAME", 180, 280,1);
         // drawText("PLAYER", 170, 250);
-        drawText("Press SPACE to continue", 180, 180);
+        glColor3f(1,1,1);
+        drawText("Press                 to continue", 180, 180);
+        glColor3f((rand() % 100 + 50)/100,(rand() % 100 + 50)/100,(rand() % 100 + 50)/100);
+        drawText("SPACE",215,180);
         glutSwapBuffers();
     }
     else if(screen == 1)
     {
+        glClearColor(0,0,0,1);
         glClear(GL_COLOR_BUFFER_BIT);
+        glColor3f(1,0.75,0);
+        glFlush(); 
+        drawText("INSTRUCTIONS:",30, 440,1);
         glColor3f(1,1,1);
-        drawText("Instructions:",30, 440);
         drawText("The aim of the game is to dodge the obstacles for as long as you can!",30, 400);
-        drawText("Controls:",30, 340);
-
+        glColor3f(1,0.75,0);
+        drawText("CONTROLS:",30, 340,1);
+        glColor3f(0,0.75,1);
         drawText("Use <- to move left", 170, 310);
         drawText("Use -> to move right", 170, 270);
-        drawText("Levels:",30, 210);
+        glColor3f(1,0.75,0);
+        drawText("LEVELS:",30, 210,1);
+        glColor3f(0,1,0.75);
         drawText("B - Beginner", 170, 190);
         drawText("I  - Intermediate", 170, 160);
         drawText("E - Expert", 170, 130);
-        drawText("Select (B,I,E) - ", 30, 80);
+        glColor3f(1,1,1);
+        drawText("Select (B,I,E) - ", 30, 80,1);
     
         glutSwapBuffers();
     }
-    else
+    else if(screen ==2)
     {
+        
+        glClearColor(0.1,0.4,0.7,1);
         glClear(GL_COLOR_BUFFER_BIT);
         drawPath();
+        drawUFO();
         drawObject();
-        drawOTile();
         score = score + 1;
-        glColor3f(1,1,1);
+        glColor3f(0,1,0);
 
         drawText("Score :", 395,465);
         sprintf( buffer, "%d", score );
         drawTextNum(buffer, 6, 450,465);
 
+        
+        glColor3f(1,0.5,0);
         drawText("Dodge :", 395,425);
         sprintf( buffer, "%d", score/20 );
         drawTextNum(buffer, 6, 450,425);
@@ -387,13 +451,17 @@ void display()
         for(q = 0; q<= 10000000; q++){;}
         if(collide == true)
         {
-            glColor3f(1,1,1);
-            drawText("Game Over", 200,250);
-            glutSwapBuffers();
-
+           screen=3;
             //getchar();
         }
     }
+    else if(screen ==3)
+    {
+        
+        restart();
+
+    }
+
 }
 
 void playmusic()
@@ -416,6 +484,6 @@ int main(int argc, char **argv)
     glutKeyboardFunc(Normalkey);
     // glutFullScreen();
     glutIdleFunc(display);
-    //std::thread first (playmusic);
+    std::thread first (playmusic);
     glutMainLoop();
 }
