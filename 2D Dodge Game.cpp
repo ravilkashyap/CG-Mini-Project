@@ -136,16 +136,6 @@ void drawCircle(int tileX, int tileY, int radius)// for our object UFO ;)
 
 void drawUFO()//our target object UFO
 {
-    // glPointSize(50.0);
-    // glBegin(GL_POINTS);
-    // glColor3f(1,0.5,0);
-    // //glColor3f((rand() % 100 + 30)/100,(rand() % 100 + 30)/100,(rand() % 100 + 30)/100);
-    // glVertex2f(tileX, tileY);
-    // glEnd();
-    
-    //filled circle
-    
-    
     glColor3f(0.9,0.9,0.9);
     drawCircle(tileX,tileY,20);
     
@@ -166,22 +156,7 @@ void drawUFO()//our target object UFO
     
     glColor3f(0,0.8,0);
     drawCircle(tileX-10,tileY-10,4);
-    
-    
-    // glColor3f(0,0,0.7);
-    // drawCircle(tileX,tileY+10,4);
-    
-    // glColor3f(0.7,0,0.7);
-    // drawCircle(tileX,tileY-10,4);
-    
-    // glColor3f(0.7,0,0);
-    // drawCircle(tileX+10,tileY,4);
-    
-    // glColor3f(0,0.7,0);
-    // drawCircle(tileX-10,tileY,4);
-    
-    
-    
+
 }
 
 
@@ -218,19 +193,6 @@ void drawObject() //obstacles
             
             
         }
-        
-        // if(otileY[i] < -25)
-        // {
-        //     if(rand() % 2 == 0)
-        //     {
-        //         otileX[i] = 200;
-        //     }
-        //     else
-        //     {
-        //         otileX[i] = 280;
-        //     }
-        //     otileY[i] = 600;
-        // }
         
         if(otileY[i] < -25)
         {
