@@ -1,3 +1,7 @@
+//2D dodge game
+//Creator / Developer Name : Ravil Kashyap & Priyadharshan Saba
+//Script : C++
+//Frameworks : OpenGL
 
 #include <GLUT/glut.h>
 #include <iostream>//for strlen

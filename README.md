@@ -2,4 +2,4 @@
 
 <h2> 2D DODGE GAME </h2>
 
-A mini project using OpenGL framework.
+A mini project using OpenGL framework. 
